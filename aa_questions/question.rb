@@ -33,6 +33,10 @@ class Question
     questions.map { |question| Question.new(question)}
   end
 
+  def self.most_followed(n)
+    QuestionFollow.most_followed_questions(n)
+  end
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -46,6 +50,10 @@ class Question
 
   def replies
     Reply.find_by_question_id(self.id)
+  end
+
+  def followers
+    QuestionFollow.followers_for_question_id(self.id)
   end
 
 end

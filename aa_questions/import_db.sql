@@ -57,7 +57,10 @@ INSERT INTO
   users (fname, lname)
 VALUES
   ('Jin', 'Ooi'),
-  ('Frankie', 'Ziman');
+  ('Frankie', 'Ziman'),
+  ('Billy', 'Bob'),
+  ('Lilly', 'Jane'),
+  ('Jane', 'Doe');
 
 INSERT INTO
   questions (title, body, author_id)
@@ -80,7 +83,10 @@ INSERT INTO
   question_follows (user_id, question_id)
 VALUES
   ((SELECT id FROM users WHERE fname = 'Jin'),(SELECT id FROM questions WHERE title LIKE 'cats')),
-  ((SELECT id FROM users WHERE fname = 'Frankie'),(SELECT id FROM questions WHERE title LIKE 'hello'));
+  ((SELECT id FROM users WHERE fname = 'Frankie'),(SELECT id FROM questions WHERE title LIKE 'hello')),
+  ((SELECT id FROM users WHERE fname = 'Billy'),(SELECT id FROM questions WHERE title LIKE 'hello')),
+  ((SELECT id FROM users WHERE fname = 'Lilly'),(SELECT id FROM questions WHERE title LIKE 'hello')),
+  ((SELECT id FROM users WHERE fname = 'Jane'),(SELECT id FROM questions WHERE title LIKE 'hello'));
 
 INSERT INTO
   question_likes (user_id, question_id)
