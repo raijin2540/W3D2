@@ -62,8 +62,26 @@ class QuestionLike
 
     return nil unless liked_questions.length > 0
 
-    liked_questions.map { |liked_question| Question.new(liked_question) 
+    liked_questions.map { |liked_question| Question.new(liked_question) }
   end
+
+  def self.most_liked_questions(n)
+    most_liked = QuestionsDatabaseConnection.instance.execute(<<-SQL, n)
+      SELECT
+        question_id, COUNT(id)
+      FROM
+        question_likes
+      GROUP BY
+        question_id
+      ORDER BY
+        COUNT(id)
+      LIMIT
+         ?
+    SQL
+    return nil unless most_liked.length > 0
+    most_liked.map { |liked| Question.new(liked) }
+  end
+
 
   def initialize(options)
     @id = options['id']

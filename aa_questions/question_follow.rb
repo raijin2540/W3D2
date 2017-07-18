@@ -54,17 +54,21 @@ class QuestionFollow
   def self.most_followed_questions(n)
     most_followed = QuestionsDatabaseConnection.instance.execute(<<-SQL, n)
       SELECT
-        question_id, COUNT(id)
+        questions.*
       FROM
         question_follows
+      JOIN
+        questions ON question_follows.question_id = questions.id
       GROUP BY
         question_id
       ORDER BY
-        COUNT(id)
+        COUNT(question_follows.id) DESC
       LIMIT
          ?
-
     SQL
+
+    return nil unless most_followed.length > 0
+    most_followed.map { |followed| Question.new(followed) }
   end
 
   def initialize(options)
